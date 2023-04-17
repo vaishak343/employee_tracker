@@ -36,7 +36,10 @@ class _RootWidgetState extends State<RootWidget> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       theme: ThemeData(
-        useMaterial3: false,
+        snackBarTheme: const SnackBarThemeData(
+          backgroundColor: Color(0xff323238),
+          actionTextColor: Color(0xff1DA1F2),
+        ),
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: Color(0xff1DA1F2),
@@ -48,7 +51,9 @@ class _RootWidgetState extends State<RootWidget> {
           background: Color(0xffF2F2F2),
           onBackground: Color(0xff1DA1F2),
           surface: Colors.white,
-          onSurface: Colors.white,
+          onSurface: Colors.black,
+          primaryContainer: Color(0xffEDF8FF),
+          onPrimaryContainer: Color(0xff1DA1F2),
         ),
       ),
       routerConfig: _router,
