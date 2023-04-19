@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'views/add_employee/add_employee.dart';
-import 'views/edit_employee/edit_employee.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:realtime_inov/models/employee_model.dart';
+import 'package:realtime_inov/repositories/employee_repo.dart';
+import 'package:realtime_inov/services/services.dart';
+import 'utils/utils.dart';
+import 'views/employee_details/employee_details.dart';
 import 'views/employee_list/employee_list.dart';
 
-void main() {
-  runApp(const RootWidget());
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(EmployeeModelAdapter());
+  var empBox = await Hive.openBox<EmployeeModel>(Constants.empBox);
+  runApp(
+    RepositoryProvider(
+      create: (context) => EmployeeRepo(
+        hiveService: HiveService<EmployeeModel>(box: empBox),
+      ),
+      child: const RootWidget(),
+    ),
+  );
 }
 
 class RootWidget extends StatefulWidget {
@@ -16,47 +31,58 @@ class RootWidget extends StatefulWidget {
 }
 
 class _RootWidgetState extends State<RootWidget> {
-  final _router = GoRouter(initialLocation: '/', routes: [
-    GoRoute(
+  final _router = GoRouter(
+    initialLocation: '/',
+    routes: [
+      GoRoute(
         path: '/',
         builder: (context, state) => const EmployeeListView(),
         routes: [
           GoRoute(
-            path: 'add',
-            builder: (context, state) => const AddEmployeeView(),
+            path: 'details',
+            builder: (context, state) {
+              return EmployeeDetailsView(model: state.extra as EmployeeModel?);
+            },
           ),
-          GoRoute(
-            path: 'edit',
-            builder: (context, state) => const EditEmployeeView(),
-          ),
-        ])
-  ]);
+        ],
+      )
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: ThemeData(
-        snackBarTheme: const SnackBarThemeData(
-          backgroundColor: Color(0xff323238),
-          actionTextColor: Color(0xff1DA1F2),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              EmployeeListBloc(employeeRepo: context.read<EmployeeRepo>())
+                ..add(LoadEmployeesEvent()),
+        )
+      ],
+      child: MaterialApp.router(
+        theme: ThemeData(
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Color(0xff323238),
+            actionTextColor: Color(0xff1DA1F2),
+          ),
+          colorScheme: const ColorScheme(
+            brightness: Brightness.light,
+            primary: Color(0xff1DA1F2),
+            onPrimary: Colors.white,
+            secondary: Color(0xff1DA1F2),
+            onSecondary: Colors.white,
+            error: Color(0xffF34642),
+            onError: Colors.white,
+            background: Color(0xffF2F2F2),
+            onBackground: Color(0xff1DA1F2),
+            surface: Colors.white,
+            onSurface: Colors.black,
+            primaryContainer: Color(0xffEDF8FF),
+            onPrimaryContainer: Color(0xff1DA1F2),
+          ),
         ),
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Color(0xff1DA1F2),
-          onPrimary: Colors.white,
-          secondary: Color(0xff1DA1F2),
-          onSecondary: Colors.white,
-          error: Color(0xffF34642),
-          onError: Colors.white,
-          background: Color(0xffF2F2F2),
-          onBackground: Color(0xff1DA1F2),
-          surface: Colors.white,
-          onSurface: Colors.black,
-          primaryContainer: Color(0xffEDF8FF),
-          onPrimaryContainer: Color(0xff1DA1F2),
-        ),
+        routerConfig: _router,
       ),
-      routerConfig: _router,
     );
   }
 }
