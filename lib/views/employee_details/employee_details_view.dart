@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:realtime_inov/utils/utils.dart';
+import 'package:employee_tracker/utils/utils.dart';
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 import '../employee_list/employee_list.dart';

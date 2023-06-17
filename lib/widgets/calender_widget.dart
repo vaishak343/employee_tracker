@@ -2,8 +2,8 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:realtime_inov/utils/utils.dart';
-import 'package:realtime_inov/widgets/widgets.dart';
+import 'package:employee_tracker/utils/utils.dart';
+import 'package:employee_tracker/widgets/widgets.dart';
 
 class CalenderWidget extends StatefulWidget {
   const CalenderWidget({

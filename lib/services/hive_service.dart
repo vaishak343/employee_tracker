@@ -26,15 +26,11 @@ class HiveService<T> {
     return _box.values.toList();
   }
 
-  T? getWithKey(String key) {
-    return _box.get(key);
-  }
-
-  Future<void> add(T model, key) async {
+  Future<void> add(T model) async {
     final streamValues = [..._streamController.value];
     streamValues.add(model);
     _streamController.add(streamValues);
-    await _box.put(key, model);
+    await _box.add(model);
   }
 
   Future<void> edit(T key, T model) async {
@@ -52,10 +48,10 @@ class HiveService<T> {
     }
   }
 
-  Future<void> delete(T model, key) async {
+  Future<void> delete(T model) async {
     final streamValues = [..._streamController.value];
     streamValues.remove(model);
     _streamController.add(streamValues);
-    await _box.delete(key);
+    await _box.delete(model);
   }
 }

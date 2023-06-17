@@ -161,6 +161,7 @@ class _EmployeeDetailsWidgetState extends State<EmployeeDetailsWidget> {
                       );
                   } else {
                     var emp = EmployeeModel(
+                      
                       empName: nameFieldController.text,
                       empRole: roleFieldController.text,
                       fromDate: fromDate,
