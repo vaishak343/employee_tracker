@@ -61,7 +61,7 @@ class EmployeeListBloc extends Bloc<EmployeeListEvent, EmployeeListState> {
     EditEmployeeEvent event,
     Emitter<EmployeeListState> emit,
   ) async {
-    await _employeeRepo.editEmployee(event.oldEmp, event.editedEmp);
+    await _employeeRepo.editEmployee( event.editedEmp);
   }
 
   Future<void> deleteEmployee(

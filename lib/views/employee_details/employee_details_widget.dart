@@ -161,7 +161,7 @@ class _EmployeeDetailsWidgetState extends State<EmployeeDetailsWidget> {
                       );
                   } else {
                     var emp = EmployeeModel(
-                      
+                      empId: UniqueKey().toString(),
                       empName: nameFieldController.text,
                       empRole: roleFieldController.text,
                       fromDate: fromDate,

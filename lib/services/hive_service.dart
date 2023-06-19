@@ -26,32 +26,32 @@ class HiveService<T> {
     return _box.values.toList();
   }
 
-  Future<void> add(T model) async {
+  Future<void> add(String key, T model) async {
     final streamValues = [..._streamController.value];
     streamValues.add(model);
     _streamController.add(streamValues);
-    await _box.add(model);
+    await _box.put(key, model);
   }
 
-  Future<void> edit(T key, T model) async {
+  Future<void> edit(String key, T model) async {
     final streamValues = [..._streamController.value];
-    var index = streamValues.indexOf(key);
+    var index = streamValues.indexOf(model);
 
     try {
       streamValues
         ..removeAt(index)
         ..insert(index, model);
       _streamController.add(streamValues);
-      await _box.putAt(index, model);
+      await _box.put(key, model);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> delete(T model) async {
+  Future<void> delete(String key, T model) async {
     final streamValues = [..._streamController.value];
     streamValues.remove(model);
     _streamController.add(streamValues);
-    await _box.delete(model);
+    await _box.delete(key);
   }
 }

@@ -13,17 +13,16 @@ class EmployeeRepo {
   }
 
   Future<void> addEmployee(EmployeeModel model) async {
-    await _hiveService.add(model);
+    await _hiveService.add(model.empId, model);
   }
 
   Future<void> editEmployee(
-    EmployeeModel keyModel,
     EmployeeModel newModel,
   ) async {
-    await _hiveService.edit(keyModel, newModel);
+    await _hiveService.edit(newModel.empId, newModel);
   }
 
   Future<void> deleteEmployee(EmployeeModel model) async {
-    await _hiveService.delete(model);
+    await _hiveService.delete(model.empId, model);
   }
 }

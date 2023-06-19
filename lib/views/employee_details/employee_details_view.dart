@@ -32,7 +32,7 @@ class EmployeeDetailsView extends StatelessWidget {
           context.read<EmployeeListBloc>().add(AddEmployeeEvent(emp: tempEmp));
         } else {
           context.read<EmployeeListBloc>().add(EditEmployeeEvent(
-                oldEmp: model!,
+                // oldEmp: model!,
                 editedEmp: tempEmp,
               ));
         }

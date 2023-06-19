@@ -35,13 +35,13 @@ class UndoDeleteEmployeeEvent extends EmployeeListEvent {}
 
 class EditEmployeeEvent extends EmployeeListEvent {
   const EditEmployeeEvent({
-    required this.oldEmp,
+    // required this.oldEmp,
     required this.editedEmp,
   });
 
-  final EmployeeModel oldEmp;
+  // final EmployeeModel oldEmp;
   final EmployeeModel editedEmp;
 
   @override
-  List<Object> get props => [oldEmp, editedEmp];
+  List<Object> get props => [editedEmp];
 }
