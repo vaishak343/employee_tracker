@@ -20,4 +20,4 @@ Employee Tracker app as part of an interview process, where I had the chance to 
 ## Clone the repository
 
    ```bash
-   git clone https://github.com/your-username/employee-tracker-app.git
+   git clone https://github.com/vaishak343/employee_tracker.git
